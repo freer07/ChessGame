@@ -73,4 +73,8 @@ public class Board {
         board[x2][y2] = board[x1][y1];
         board[x1][y1] = null;
     }
+
+    public void findAllMoves() {
+        pieces.stream().filter(piece -> piece.isActive).forEach(piece -> piece.findAvailPos(board.clone()));
+    }
 }

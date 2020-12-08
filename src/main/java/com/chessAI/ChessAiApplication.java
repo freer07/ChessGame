@@ -1,9 +1,9 @@
 package com.chessAI;
 
-import org.springframework.boot.SpringApplication;
+/*import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication*/
 public class ChessAiApplication {
 	Board board;
 
@@ -12,10 +12,13 @@ public class ChessAiApplication {
 		board.show();
 		board.move(1,2,2,2);
 		board.show();
+		board.findAllMoves();
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SpringApplication.run(ChessAiApplication.class, args);
-	}
+	}*/
+
+	public static void main(String[] args) {ChessAiApplication chessAiApplication = new ChessAiApplication();}
 
 }
