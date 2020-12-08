@@ -52,4 +52,13 @@ public class Board {
             System.out.println("+---+---+---+---+---+---+---+---+");
         }
     }
+    public void move(int x1,int y1,int x2,int y2 ){
+        Piece temp;
+
+        temp = board[x2][y2];
+
+        board[x2][y2] = board[x1][y1];
+        board[x1][y1] = null;
+
+    }
 }
