@@ -3,7 +3,7 @@ package com.chessAI.Pieces;
 public class King extends Piece {
     private static final String abbrev = "K";
     private static final int value = 1000000;
-    public boolean hasMoved = false;
+    //public boolean hasMoved = false;
     public boolean inCheck = false;
 
     public King(boolean b, int x, int y) {
@@ -11,8 +11,8 @@ public class King extends Piece {
     }
 
     @Override
-    public void findAvailPos(Piece[][] boardLayout) {
-        super.findAvailPos(boardLayout);
+    public void findAvailPos(Piece[][] boardLayout, int X, int Y) {
+        super.findAvailPos(boardLayout, X, Y);
 
         //X+1 Y+1
         if (X+1 < boardLayout.length && Y+1 < boardLayout.length) {

@@ -4,7 +4,7 @@ public class Rook extends Piece {
     private static final String abbrev = "R";
     private static final int value = 50;
     public boolean isOriginal = true;
-    public boolean hasMoved = false;
+    //public boolean hasMoved = false;
     public boolean canCastle = true;
 
     public Rook(boolean b, int x, int y) {
@@ -18,8 +18,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void findAvailPos(Piece[][] boardLayout) {
-        super.findAvailPos(boardLayout);
+    public void findAvailPos(Piece[][] boardLayout, int X, int Y) {
+        super.findAvailPos(boardLayout, X, Y);
         //Find king for castling
         King k = getKing(boardLayout);
 
@@ -33,6 +33,7 @@ public class Rook extends Piece {
                 addAvailPos(i, Y);
             } else if (pos.black != black) { //contains enemy piece then valid
                 addAvailPos(i, Y);
+                break;
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
@@ -48,6 +49,7 @@ public class Rook extends Piece {
                 addAvailPos(X, i);
             } else if (pos.black != black) { //contains enemy piece then valid
                 addAvailPos(X, i);
+                break;
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
@@ -63,6 +65,7 @@ public class Rook extends Piece {
                 addAvailPos(i, Y);
             } else if (pos.black != black) { //contains enemy piece then valid
                 addAvailPos(i, Y);
+                break;
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
@@ -78,6 +81,7 @@ public class Rook extends Piece {
                 addAvailPos(X, i);
             } else if (pos.black != black) { //contains enemy piece then valid
                 addAvailPos(X, i);
+                break;
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
