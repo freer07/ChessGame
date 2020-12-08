@@ -11,6 +11,7 @@ public class ChessAiApplication {
 		board = new Board();
 		board.show();
 		board.findAllMoves();
+		System.out.println("Found All Moves!");
 	}
 
 	/*public static void main(String[] args) {

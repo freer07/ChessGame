@@ -1,7 +1,5 @@
 package com.chessAI.Pieces;
 
-import java.util.Vector;
-
 public class Pawn extends Piece {
     private static final String abbrev = "P";
     private static final int value = 10;

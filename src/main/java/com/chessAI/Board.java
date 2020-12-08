@@ -4,8 +4,9 @@ import com.chessAI.Pieces.*;
 import java.util.ArrayList;
 
 public class Board {
-    private static Piece[][] board = new Piece[8][8];
-    private static ArrayList<Piece> pieces = new ArrayList<>();
+    private static final Piece[][] board = new Piece[8][8];
+    private static final ArrayList<Piece> pieces = new ArrayList<>();
+
     public Board(){
         startBoard();
     }
