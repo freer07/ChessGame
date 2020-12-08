@@ -10,8 +10,6 @@ public class ChessAiApplication {
 	public ChessAiApplication() {
 		board = new Board();
 		board.show();
-		board.move(1,2,2,2);
-		board.show();
 		board.findAllMoves();
 	}
 

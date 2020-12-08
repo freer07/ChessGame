@@ -23,4 +23,11 @@ public class Piece {
     public void findAvailPos(Piece[][] boardLayout) {
         //...Do Stuff//
     }
+
+    void addAvailPos(int x, int y) {
+        Vector<Integer> vector = new Vector<>();
+        vector.add(x);
+        vector.add(y);
+        availPos.add(vector);
+    }
 }

@@ -17,12 +17,12 @@ public class Pawn extends Piece {
             if (black && Y-2 >= 0) { //black on bottom so move up
                 Piece p = boardLayout[X][Y-2];
                 if (p==null) { //valid position
-                    addAvailPos(X, Y+2);
+                    addAvailPos(X, Y-2);
                 }
             } else if (Y+2 < boardLayout.length) { //white on top so move down
                 Piece p = boardLayout[X][Y+2];
                 if (p==null) { //valid position
-                    addAvailPos(X,Y-2);
+                    addAvailPos(X,Y+2);
                 }
             }
         }
@@ -45,47 +45,28 @@ public class Pawn extends Piece {
             if (X+1 < boardLayout.length && Y-1 >= 0) {
                 Piece p = boardLayout[X + 1][Y - 1];
                 if (p != null && !p.black) { //valid position
-                    Vector<Integer> vector = new Vector<>();
-                    vector.add(X);
-                    vector.add(Y + 2);
-                    availPos.add(vector);
+                    addAvailPos(X+1, Y-1);
                 }
             }
             if (X-1 >= 0 && Y-1 >=0) {
                 Piece p = boardLayout[X - 1][Y - 1];
                 if (p != null && !p.black) { //valid position
-                    Vector<Integer> vector = new Vector<>();
-                    vector.add(X);
-                    vector.add(Y + 2);
-                    availPos.add(vector);
+                    addAvailPos(X-1, Y-1);
                 }
             }
         } else { //white on top so move down
             if (X+1 < boardLayout.length && Y+1 < boardLayout.length) {
                 Piece p = boardLayout[X + 1][Y + 1];
                 if (p != null && p.black) { //valid position
-                    Vector<Integer> vector = new Vector<>();
-                    vector.add(X);
-                    vector.add(Y + 2);
-                    availPos.add(vector);
+                    addAvailPos(X+1, Y+1);
                 }
             }
             if (X-1 >= 0 && Y+1 < boardLayout.length) {
                 Piece p = boardLayout[X - 1][Y + 1];
                 if (p != null && p.black) { //valid position
-                    Vector<Integer> vector = new Vector<>();
-                    vector.add(X);
-                    vector.add(Y + 2);
-                    availPos.add(vector);
+                    addAvailPos(X-1, Y+1);
                 }
             }
         }
-    }
-
-    private void addAvailPos(int x, int y) {
-        Vector<Integer> vector = new Vector<>();
-        vector.add(x);
-        vector.add(y);
-        availPos.add(vector);
     }
 }
