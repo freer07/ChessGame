@@ -62,6 +62,7 @@ public class Board {
             System.out.println("\t+---+---+---+---+---+---+---+---+");
         }
         System.out.println("\t  A   B   C   D   E   F   G   H");
+        System.out.println();
     }
 
     public void move(int x1, int y1, int x2, int y2) {

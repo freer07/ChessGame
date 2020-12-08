@@ -7,9 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ChessAiApplication {
 	Board board;
 
-	public ChessAiApplication(){
-	board = new Board();
-	board.show();
+	public ChessAiApplication() {
+		board = new Board();
+		board.show();
+		board.move(1,2,2,2);
+		board.show();
 	}
 
 	public static void main(String[] args) {
