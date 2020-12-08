@@ -7,4 +7,76 @@ public class Knight extends Piece {
     public Knight(boolean b, int x, int y) {
         super(b, x, y, abbrev, value);
     }
+
+    @Override
+    public void findAvailPos(Piece[][] boardLayout) {
+        super.findAvailPos(boardLayout);
+        //X+2 Y+1
+        if (X+2 < boardLayout.length && Y+1 < boardLayout.length) {
+            Piece p = boardLayout[X+2][Y+1];
+            if (isValid(p)) {
+                addAvailPos(X+2, Y+1);
+            }
+        }
+
+        //X+2 Y-1
+        if (X+2 < boardLayout.length && Y-1 >= 0) {
+            Piece p = boardLayout[X+2][Y-1];
+            if (isValid(p)) {
+                addAvailPos(X+2, Y-1);
+            }
+        }
+
+        //X-2 Y+1
+        if (X-2 >= 0 && Y+1 < boardLayout.length) {
+            Piece p = boardLayout[X-2][Y+1];
+            if (isValid(p)) {
+                addAvailPos(X-2, Y+1);
+            }
+        }
+
+        //X-2 Y-1
+        if (X-2 >= 0 && Y-1 >= 0) {
+            Piece p = boardLayout[X-2][Y-1];
+            if (isValid(p)) {
+                addAvailPos(X-2, Y-1);
+            }
+        }
+
+        //Y+2 X+1
+        if (Y+2 < boardLayout.length && X+1 < boardLayout.length) {
+            Piece p = boardLayout[X+1][Y+2];
+            if (isValid(p)) {
+                addAvailPos(X+1, Y+2);
+            }
+        }
+
+        //Y+2 X-1
+        if (Y+2 < boardLayout.length && X-1 >= 0) {
+            Piece p = boardLayout[X-1][Y+2];
+            if (isValid(p)) {
+                addAvailPos(X-1, Y+2);
+            }
+        }
+
+        //Y-2 X+1
+        if (Y-2 >= 0 && X+1 < boardLayout.length) {
+            Piece p = boardLayout[X+1][Y-2];
+            if (isValid(p)) {
+                addAvailPos(X+1, Y-2);
+            }
+        }
+
+        //Y-2 X-1
+        if (Y-2 >= 0 && X-1 >= 0) {
+            Piece p = boardLayout[X-1][Y-2];
+            if (isValid(p)) {
+                addAvailPos(X-1, Y-2);
+            }
+        }
+    }
+
+    private boolean isValid(Piece p) {
+        return p == null || (p.black != black);
+    }
 }
