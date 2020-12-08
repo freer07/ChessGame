@@ -1,16 +1,21 @@
 package com.chessAI;
 import com.chessAI.Pieces.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Board {
-    private static final Piece[][] board = new Piece[8][8];
-    private static final ArrayList<Piece> pieces = new ArrayList<>();
+    private Piece[][] board = new Piece[8][8];
+    private final ArrayList<Piece> pieces = new ArrayList<>();
 
     public Board(){
         startBoard();
     }
-    public void startBoard() {
+
+    public Board(Piece[][] layout) {
+        board = layout;
+    }
+
+    private void startBoard() {
         //White Pieces Row 0
         board[0][0] = new Rook(false, 0, 0);
         board[0][1] = new Knight(false, 0, 1);
@@ -22,7 +27,7 @@ public class Board {
         board[0][7] = new Rook(false, 0, 7);
         //White Pieces Row 1
         for(int i = 0; i<8; i++) {
-            board[1][i] = new Pawn(false, 0, i);
+            board[1][i] = new Pawn(false, 1, i);
         }
         //Black Pieces Row 0
         board[7][0] = new Rook(true, 7, 0);
@@ -35,7 +40,7 @@ public class Board {
         board[7][7] = new Rook(true, 7, 7);
         //Black Pieces Row 1
         for(int i = 0; i<8; i++) {
-            board[6][i] = new Pawn(false, 0, i);
+            board[6][i] = new Pawn(true, 6, i);
         }
 
         //Add all pieces to list
@@ -48,13 +53,15 @@ public class Board {
         }
     }
     public void show() {
+        System.out.println("White == Upper Case  Black == Lower Case");
         System.out.println("\t+---+---+---+---+---+---+---+---+");
         for (int i = 0; i < board.length; i++) {
             System.out.print((i+1) + "\t|");
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
                 if (p != null) {
-                    System.out.print(" " + p.abbrev + " |");
+                    String s = p.isBlack() ? p.abbrev.toLowerCase() : p.abbrev;
+                    System.out.print(" " + s + " |");
                 } else {
                     System.out.print("   |");
                 }
@@ -63,19 +70,53 @@ public class Board {
             System.out.println("\t+---+---+---+---+---+---+---+---+");
         }
         System.out.println("\t  A   B   C   D   E   F   G   H");
-        System.out.println();
     }
 
-   /* public void move(int x1, int y1, int x2, int y2) {
-        Piece temp;
-
-        temp = board[x2][y2];
-
+   public void move(int x1, int y1, int x2, int y2) {
         board[x2][y2] = board[x1][y1];
         board[x1][y1] = null;
-    }*/
+        board[x2][y2].setCorr(x2, y2);
+    }
 
-    public void findAllMoves() {
-        pieces.stream().filter(piece -> piece.isActive).forEach(piece -> piece.findAvailPos(board.clone()));
+    public List<Board> getPossibleBoards() {
+        List<Board> boards = new LinkedList<>();
+        findAllMoves();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                Piece p = board[i][j];
+                if (p != null) {
+
+                    //TODO: add logic for if rook and can castle!!!
+
+                    Vector<Vector<Integer>> availPos = p.availPos;
+                    for (Vector<Integer> v : availPos) {
+                        int x = v.get(0);
+                        int y = v.get(1);
+                        Board newBoard = new Board(getLayoutClone());
+                        newBoard.move(i, j, x, y);
+                        boards.add(newBoard);
+                    }
+                }
+            }
+        }
+
+        return boards;
+    }
+
+    private void findAllMoves() {
+        //pieces.stream().filter(piece -> piece.isActive).forEach(piece -> piece.findAvailPos(board.clone()));
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                Piece p = board[i][j];
+                if (p != null) {
+                    p.findAvailPos(getLayoutClone());
+                }
+            }
+        }
+    }
+
+    public Piece[][] getLayoutClone() {
+        Piece[][] copy = Arrays.stream(board).map(Piece[]::clone).toArray(Piece[][]::new);
+        return copy;
     }
 }

@@ -8,7 +8,7 @@ public class Piece {
     int Y;
     public boolean isActive;
     public String abbrev;
-    public int value;
+    int value;
     public Vector<Vector<Integer>> availPos = new Vector<>();
 
     public Piece(boolean b, int x, int y, String a, int v) {
@@ -30,5 +30,18 @@ public class Piece {
         vector.add(x);
         vector.add(y);
         availPos.add(vector);
+    }
+
+    public boolean isBlack() {
+        return black;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setCorr(int x, int y) {
+        X = x;
+        Y = y;
     }
 }
