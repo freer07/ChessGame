@@ -2,10 +2,8 @@ package com.chessAI;
 import com.chessAI.Pieces.*;
 
 public class Board {
-    Piece[][] board;
+    private static Piece[][] board = new Piece[8][8];
     public Board(){
-        board = new Piece[8][8];
-
         startBoard();
     }
     public void startBoard() {
