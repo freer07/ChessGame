@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Board {
     private static Piece[][] board = new Piece[8][8];
+    private static ArrayList<Piece> pieces = new ArrayList<>();
     public Board(){
         startBoard();
     }
@@ -35,6 +36,15 @@ public class Board {
         for(int i = 0; i<8; i++) {
             board[6][i] = new Pawn(false, 0, i);
         }
+
+        //Add all pieces to list
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] != null) {
+                    pieces.add(board[i][j]);
+                }
+            }
+        }
     }
     public void show() {
         System.out.println("\t+---+---+---+---+---+---+---+---+");
@@ -53,13 +63,13 @@ public class Board {
         }
         System.out.println("\t  A   B   C   D   E   F   G   H");
     }
-    public void move(int x1,int y1,int x2,int y2 ){
+
+    public void move(int x1, int y1, int x2, int y2) {
         Piece temp;
 
         temp = board[x2][y2];
 
         board[x2][y2] = board[x1][y1];
         board[x1][y1] = null;
-
     }
 }
