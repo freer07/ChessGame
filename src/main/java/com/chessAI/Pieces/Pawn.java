@@ -11,6 +11,7 @@ public class Pawn extends Piece {
 
     @Override
     public void findAvailPos(Piece[][] boardLayout) {
+        super.findAvailPos(boardLayout);
         if (!hasMoved) {//check En Passant
             if (black && Y-2 >= 0) { //black on bottom so move up
                 Piece p = boardLayout[X][Y-2];
