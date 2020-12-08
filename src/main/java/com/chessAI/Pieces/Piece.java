@@ -4,8 +4,6 @@ import java.util.Vector;
 
 public class Piece {
     boolean black;
-    int X;
-    int Y;
     public boolean isActive;
     public boolean hasMoved = false;
     public String abbrev;
@@ -14,14 +12,12 @@ public class Piece {
 
     public Piece(boolean b, int x, int y, String a, int v) {
         black = b;
-        X = x;
-        Y = y;
         isActive = true;
         abbrev = a;
         value = v;
     }
 
-    public void findAvailPos(Piece[][] boardLayout) {
+    public void findAvailPos(Piece[][] boardLayout, int X, int Y) {
         //...Do Stuff//
         availPos.clear();
     }
@@ -42,15 +38,6 @@ public class Piece {
     }
 
     public void setCorr(int x, int y) {
-        X = x;
-        Y = y;
     }
 
-    public int getX() {
-        return X;
-    }
-
-    public int getY() {
-        return Y;
-    }
 }

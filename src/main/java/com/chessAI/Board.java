@@ -1,5 +1,6 @@
 package com.chessAI;
 import com.chessAI.Pieces.*;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -79,6 +80,8 @@ public class Board {
         if (!board[x2][y2].hasMoved) {
             board[x2][y2].hasMoved = true;
         }
+
+        board[x2][y2].setCorr(x2, y2);
     }
 
     public void castle(int rX, int rY, int kX, int kY) {
@@ -96,10 +99,10 @@ public class Board {
                         Rook rook = (Rook)p;
                         if (rook.canCastle) {
                             //TODO: Verify this works for castling
-                            King k = getKing(rook.isBlack());
+                            Pair<Integer, Integer> pair = getKing(rook.isBlack());
                             Board newBoard = new Board(getLayoutClone());
-                            assert k != null;
-                            newBoard.castle(rook.getX(), rook.getY(), k.getX(), k.getY());
+                            assert pair != null;
+                            newBoard.castle(i, j, pair.getKey(), pair.getValue());
                             boards.add(newBoard);
                         }
                     }
@@ -125,7 +128,7 @@ public class Board {
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
                 if (p != null) {
-                    p.findAvailPos(getLayoutClone());
+                    p.findAvailPos(getLayoutClone(), i, j);
                 }
             }
         }
@@ -136,12 +139,12 @@ public class Board {
         return copy;
     }
 
-    private King getKing(boolean b) {
+    private Pair<Integer, Integer> getKing(boolean b) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
                 if (p != null && p.getClass().equals(King.class) && p.isBlack() == b) {
-                    return (King) p;
+                    return new Pair<>(i,j);
                 }
             }
         }

@@ -11,8 +11,8 @@ public class King extends Piece {
     }
 
     @Override
-    public void findAvailPos(Piece[][] boardLayout) {
-        super.findAvailPos(boardLayout);
+    public void findAvailPos(Piece[][] boardLayout, int X, int Y) {
+        super.findAvailPos(boardLayout, X, Y);
 
         //X+1 Y+1
         if (X+1 < boardLayout.length && Y+1 < boardLayout.length) {

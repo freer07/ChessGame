@@ -10,60 +10,60 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void findAvailPos(Piece[][] boardLayout) {
-        super.findAvailPos(boardLayout);
+    public void findAvailPos(Piece[][] boardLayout, int X, int Y) {
+        super.findAvailPos(boardLayout, X, Y);
         if (!hasMoved) {//check En Passant
-            if (black && X-2 >= 0) { //black on bottom so move up
-                Piece p = boardLayout[X-2][Y];
+            if (this.black && X -2 >= 0) { //black on bottom so move up
+                Piece p = boardLayout[X -2][Y];
                 if (p==null) { //valid position
-                    addAvailPos(X-2, Y);
+                    addAvailPos(X -2, Y);
                 }
-            } else if (X+2 < boardLayout.length) { //white on top so move down
-                Piece p = boardLayout[X+2][Y];
+            } else if (X +2 < boardLayout.length) { //white on top so move down
+                Piece p = boardLayout[X +2][Y];
                 if (p==null) { //valid position
-                    addAvailPos(X+2,Y);
+                    addAvailPos(X +2, Y);
                 }
             }
         }
 
         //check space in front
-        if (black && X-1 >= 0) { //black on bottom so move up
-            Piece p = boardLayout[X-1][Y];
-            if (p==null) { //valid position
-                addAvailPos(X-1, Y);
+        if (this.black && X -1 >= 0) { //black on bottom so move up
+            Piece p = boardLayout[X -1][Y];
+            if (p==null || !p.isBlack()) { //valid position
+                addAvailPos(X -1, Y);
             }
-        } else if (X+1 < boardLayout.length) { //white on top so move down
-            Piece p = boardLayout[X+1][Y];
-            if (p==null) { //valid position
-                addAvailPos(X+1,Y);
+        } else if (!black && X +1 < boardLayout.length) { //white on top so move down
+            Piece p = boardLayout[X +1][Y];
+            if (p==null || p.isBlack()) { //valid position
+                addAvailPos(X +1, Y);
             }
         }
 
         //check angles
-        if (black) { //black on bottom so move up
-            if (X-1 >= 0 && Y-1 >= 0) {
+        if (this.black) { //black on bottom so move up
+            if (X -1 >= 0 && Y -1 >= 0) {
                 Piece p = boardLayout[X - 1][Y - 1];
                 if (p != null && !p.black) { //valid position
-                    addAvailPos(X-1, Y-1);
+                    addAvailPos(X -1, Y -1);
                 }
             }
-            if (X-1 >= 0 && Y+1 < boardLayout.length) {
+            if (X -1 >= 0 && Y +1 < boardLayout.length) {
                 Piece p = boardLayout[X - 1][Y + 1];
                 if (p != null && !p.black) { //valid position
-                    addAvailPos(X-1, Y+1);
+                    addAvailPos(X -1, Y +1);
                 }
             }
         } else { //white on top so move down
-            if (X+1 < boardLayout.length && Y+1 < boardLayout.length) {
+            if (X +1 < boardLayout.length && Y +1 < boardLayout.length) {
                 Piece p = boardLayout[X + 1][Y + 1];
                 if (p != null && p.black) { //valid position
-                    addAvailPos(X+1, Y+1);
+                    addAvailPos(X +1, Y +1);
                 }
             }
-            if (X+1 < boardLayout.length && Y-1 >= 0) {
+            if (X +1 < boardLayout.length && Y -1 >= 0) {
                 Piece p = boardLayout[X + 1][Y - 1];
                 if (p != null && p.black) { //valid position
-                    addAvailPos(X+1, Y-1);
+                    addAvailPos(X +1, Y -1);
                 }
             }
         }

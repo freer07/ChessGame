@@ -10,8 +10,10 @@ public class BoardNode {
     Board board;
     int whiteVal = 0;
     int blackVal = 0;
+    public int value = 0;
     BoardNode parent;
     List<BoardNode> children = new LinkedList<>();
+    public BoardNode bestChild = null;
 
     public BoardNode(Board b) {
         this(b,null);
