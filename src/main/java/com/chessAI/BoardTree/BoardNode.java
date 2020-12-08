@@ -39,8 +39,8 @@ public class BoardNode {
         }
     }
 
-    public void addChildren() {
-        List<Board> boards = board.getPossibleBoards();
+    public void addChildren(boolean blackMove) {
+        List<Board> boards = board.getPossibleBoards(blackMove);
         boards.forEach(b -> children.add(new BoardNode(b, this)));
     }
 

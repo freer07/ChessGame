@@ -85,15 +85,13 @@ public class Board {
 
     }
 
-    public List<Board> getPossibleBoards() {
+    public List<Board> getPossibleBoards(boolean blackMove) {
         List<Board> boards = new LinkedList<>();
         findAllMoves();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
-                if (p != null) {
-
-
+                if (p != null && p.isBlack() == blackMove) {
                     if (p.getClass().equals(Rook.class)) {
                         Rook rook = (Rook)p;
                         if (rook.canCastle) {
