@@ -98,12 +98,12 @@ public class Board {
                     if (p.getClass().equals(Rook.class)) {
                         Rook rook = (Rook)p;
                         if (rook.canCastle) {
-                            //TODO: Verify this works for castling
-                            Pair<Integer, Integer> pair = getKing(rook.isBlack());
+                            //TODO: add logic for castling
+                            /*Pair<Integer, Integer> pair = getKing(rook.isBlack());
                             Board newBoard = new Board(getLayoutClone());
                             assert pair != null;
                             newBoard.castle(i, j, pair.getKey(), pair.getValue());
-                            boards.add(newBoard);
+                            boards.add(newBoard);*/
                         }
                     }
 
