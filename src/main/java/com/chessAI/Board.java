@@ -37,9 +37,9 @@ public class Board {
         }
     }
     public void show() {
-        System.out.println("+---+---+---+---+---+---+---+---+");
-        System.out.print("|");
+        System.out.println("\t+---+---+---+---+---+---+---+---+");
         for (int i = 0; i < board.length; i++) {
+            System.out.print((i+1) + "\t|");
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
                 if (p != null) {
@@ -49,8 +49,9 @@ public class Board {
                 }
             }
             System.out.println();
-            System.out.println("+---+---+---+---+---+---+---+---+");
+            System.out.println("\t+---+---+---+---+---+---+---+---+");
         }
+        System.out.println("\t  A   B   C   D   E   F   G   H");
     }
     public void move(int x1,int y1,int x2,int y2 ){
         Piece temp;
