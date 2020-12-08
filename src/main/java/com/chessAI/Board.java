@@ -30,4 +30,9 @@ public class Board {
         board[7][6] = new Knight(true, 7, 6);
         board[7][7] = new Rook(true, 7, 7);
     }
+    public show (char x, int y){
+        ArrayList<Piece> tile = new ArrayList<Piece>;
+        prettyPrint()
+    }
+    public prettyPrint
 }
