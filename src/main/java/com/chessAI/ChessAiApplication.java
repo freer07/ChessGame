@@ -22,7 +22,7 @@ public class ChessAiApplication {
 
 		root.addChildren();
 		System.out.println();
-		System.out.println("---Children---");
+		System.out.println("---Children---" + root.getChildren().size());
 		root.getChildren().forEach(boardNode -> {
 			boardNode.getBoard().show();
 			System.out.println("Black Val: " + boardNode.getBlackVal() + " White Val: " + boardNode.getWhiteVal());

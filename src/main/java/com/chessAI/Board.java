@@ -52,6 +52,7 @@ public class Board {
             }
         }
     }
+
     public void show() {
         System.out.println("White == Upper Case  Black == Lower Case");
         System.out.println("\t+---+---+---+---+---+---+---+---+");
@@ -72,10 +73,16 @@ public class Board {
         System.out.println("\t  A   B   C   D   E   F   G   H");
     }
 
-   public void move(int x1, int y1, int x2, int y2) {
+    public void move(int x1, int y1, int x2, int y2) {
         board[x2][y2] = board[x1][y1];
         board[x1][y1] = null;
-        board[x2][y2].setCorr(x2, y2);
+        if (!board[x2][y2].hasMoved) {
+            board[x2][y2].hasMoved = true;
+        }
+    }
+
+    public void castle(int rX, int rY, int kX, int kY) {
+
     }
 
     public List<Board> getPossibleBoards() {
@@ -86,7 +93,18 @@ public class Board {
                 Piece p = board[i][j];
                 if (p != null) {
 
-                    //TODO: add logic for if rook and can castle!!!
+
+                    if (p.getClass().equals(Rook.class)) {
+                        Rook rook = (Rook)p;
+                        if (rook.canCastle) {
+                            //TODO: Verify this works for castling
+                            King k = getKing(rook.isBlack());
+                            Board newBoard = new Board(getLayoutClone());
+                            assert k != null;
+                            newBoard.castle(rook.getX(), rook.getY(), k.getX(), k.getY());
+                            boards.add(newBoard);
+                        }
+                    }
 
                     Vector<Vector<Integer>> availPos = p.availPos;
                     for (Vector<Integer> v : availPos) {
@@ -118,5 +136,17 @@ public class Board {
     public Piece[][] getLayoutClone() {
         Piece[][] copy = Arrays.stream(board).map(Piece[]::clone).toArray(Piece[][]::new);
         return copy;
+    }
+
+    private King getKing(boolean b) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                Piece p = board[i][j];
+                if (p != null && p.getClass().equals(King.class) && p.isBlack() == b) {
+                    return (King) p;
+                }
+            }
+        }
+        return null;
     }
 }

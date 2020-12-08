@@ -7,6 +7,7 @@ public class Piece {
     int X;
     int Y;
     public boolean isActive;
+    public boolean hasMoved = false;
     public String abbrev;
     int value;
     public Vector<Vector<Integer>> availPos = new Vector<>();
@@ -43,5 +44,13 @@ public class Piece {
     public void setCorr(int x, int y) {
         X = x;
         Y = y;
+    }
+
+    public int getX() {
+        return X;
+    }
+
+    public int getY() {
+        return Y;
     }
 }
