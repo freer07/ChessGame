@@ -143,19 +143,7 @@ public class Board {
                 Piece p = board[i][j];
                 if (p != null) {
                     Piece newP;
-                    if (p.getClass() == Pawn.class) {
-                        newP = new Pawn(p.isBlack(), p.hasMoved);
-                    } else if (p.getClass() == King.class) {
-                        newP = new King(p.isBlack(), p.hasMoved);
-                    } else if (p.getClass() == Knight.class) {
-                        newP = new Knight(p.isBlack(),p.hasMoved);
-                    } else if (p.getClass() == Bishop.class) {
-                        newP = new Bishop(p.isBlack(),p.hasMoved);
-                    } else if (p.getClass() == Queen.class) {
-                        newP = new Queen(p.isBlack(),p.hasMoved);
-                    } else {
-                        newP = new Rook(p.isBlack(),p.hasMoved);
-                    }
+                    newP = p.clonePiece();
                     copy[i][j] = newP;
                 }
             }

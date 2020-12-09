@@ -72,4 +72,12 @@ public class Pawn extends Piece {
             }
         }
     }
+    @Override
+    public Piece clonePiece(){
+        Piece newPiece;
+
+        newPiece = new Pawn(this.black, this.hasMoved);
+
+        return newPiece;
+    }
 }

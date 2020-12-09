@@ -79,6 +79,14 @@ public class Knight extends Piece {
             }
         }
     }
+    @Override
+    public Piece clonePiece(){
+        Piece newPiece;
+
+        newPiece = new Knight(this.black, this.hasMoved);
+
+        return newPiece;
+    }
 
     private boolean isValid(Piece p) {
         return p == null || (p.black != black);

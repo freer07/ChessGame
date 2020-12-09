@@ -84,4 +84,13 @@ public class Bishop extends Piece {
             }
         }
     }
+
+    @Override
+    public Piece clonePiece(){
+        Piece newPiece;
+
+        newPiece = new Bishop(this.black, this.hasMoved);
+
+        return newPiece;
+    }
 }
