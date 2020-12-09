@@ -71,13 +71,16 @@ public class ChessAiApplication {
 			// WE KNOW THIS WORKS
 			node.addChildren(blackMove);
 			List<BoardNode> children = node.getChildren();
+			List<BoardNode> iterated = new LinkedList<>();
 			if (blackMove) {
 				int maxEval = Integer.MIN_VALUE;
 				for (BoardNode n : children) {
 					int eval = makeChildren(n, depth + 1, maxDepth, !blackMove, alpha, beta);
 					maxEval = Integer.max(maxEval, eval);
 					alpha = Integer.max(alpha, eval);
+					iterated.add(n);
 					if (beta <= alpha) {
+						children.removeIf(c -> !iterated.contains(c));
 						break;
 					}
 				}
@@ -89,7 +92,9 @@ public class ChessAiApplication {
 					int eval = makeChildren(n, depth + 1, maxDepth, !blackMove, alpha, beta);
 					minEval = Integer.min(minEval, eval);
 					beta = Integer.min(beta, eval);
+					iterated.add(n);
 					if (beta <= alpha) {
+						children.removeIf(c -> !iterated.contains(c));
 						break;
 					}
 				}
