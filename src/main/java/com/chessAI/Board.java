@@ -85,7 +85,30 @@ public class Board {
     }
 
     public void castle(int rX, int rY, int kX, int kY) {
+        assert rX == kX;
+        Rook rook = (Rook)board[rX][rY].clonePiece();
+        rook.canCastle = false;
+        King king = (King) board[kX][kY].clonePiece();
 
+        board[rX][rY] = null;
+        board[kX][kY] = null;
+        if (rY < kY) {
+            //newRy = kY-1
+            //newKy = newRy-1
+            //same X for both
+            int newRy = kY-1;
+            int newKy = newRy-1;
+            board[rX][newRy] = rook;
+            board[kX][newKy] = king;
+        } else {
+            //newRy = kY-1
+            //newKy = newRy-1
+            //same X for both
+            int newRy = kY+1;
+            int newKy = newRy+1;
+            board[rX][newRy] = rook;
+            board[kX][newKy] = king;
+        }
     }
 
     public List<Board> getPossibleBoards(boolean blackMove) {
@@ -99,11 +122,11 @@ public class Board {
                         Rook rook = (Rook)p;
                         if (rook.canCastle) {
                             //TODO: add logic for castling
-                            /*Pair<Integer, Integer> pair = getKing(rook.isBlack());
+                            Pair<Integer, Integer> pair = getKing(rook.isBlack());
                             Board newBoard = new Board(getLayoutClone());
                             assert pair != null;
                             newBoard.castle(i, j, pair.getKey(), pair.getValue());
-                            boards.add(newBoard);*/
+                            boards.add(newBoard);
                         }
                     }
 
@@ -151,7 +174,7 @@ public class Board {
         return copy;
     }
 
-    private Pair<Integer, Integer> getKing(boolean b) {
+    public Pair<Integer, Integer> getKing(boolean b) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
