@@ -50,26 +50,7 @@ public class ChessAiApplication {
 			BoardNode treeRoot = buildTree(new Board(board.getLayoutClone()), depthOfSearch);
 
 			board = new Board(getBestChild(treeRoot).getBoard().getLayoutClone());
-			/*board = new Board(treeRoot.bestChild.getBoard().getLayoutClone());*/
 		}
-
-		/*
-		System.out.println("---Original---");
-		System.out.println();
-
-		BoardNode root = new BoardNode(board);
-		System.out.println("Black Val: " + root.getBlackVal() + " White Val: " + root.getWhiteVal());
-		System.out.println();
-
-
-		root.addChildren();
-		System.out.println();
-		System.out.println("---Children---" + root.getChildren().size());
-		root.getChildren().forEach(boardNode -> {
-			boardNode.getBoard().show();
-			System.out.println("Black Val: " + boardNode.getBlackVal() + " White Val: " + boardNode.getWhiteVal());
-			System.out.println();
-		});*/
 	}
 
 	/**
@@ -87,18 +68,8 @@ public class ChessAiApplication {
 
 	private int makeChildren(BoardNode node, int depth, int maxDepth, boolean blackMove, int alpha, int beta) {
 		if (depth < maxDepth) {
+			// WE KNOW THIS WORKS
 			node.addChildren(blackMove);
-
-			/*//print boards of children for testing
-			if (printAllBoards) {
-				node.getChildren().forEach(boardNode -> {
-					boardNode.getBoard().show();
-					System.out.println("Black Val: " + boardNode.getBlackVal() + " White Val: " + boardNode.getWhiteVal());
-					System.out.println();
-				});
-			}*/
-
-			/*List<Integer> values = new LinkedList<>();*/
 			List<BoardNode> children = node.getChildren();
 			if (blackMove) {
 				int maxEval = Integer.MIN_VALUE;
@@ -125,23 +96,6 @@ public class ChessAiApplication {
 				node.value = minEval;
 				return minEval;
 			}
-			/*node.getChildren().forEach(boardNode -> {
-				values.add(makeChildren(boardNode, depth+1, maxDepth, !blackMove, alpha, beta));
-				if (blackMove) {
-					int eval = Collections.max(values);
-					alpha = Integer.max(alpha, eval);
-				} else { // it will be white's turn and they will pick the least
-
-				}
-			});*/
-
-			/*if (blackMove) {
-				node.value = Collections.max(values);
-				node.bestChild = node.getChildren().stream().filter(n -> n.value == node.value).findAny().get();
-			} else { // it will be white's turn and they will pick the least
-				node.value = Collections.min(values);
-				node.bestChild = node.getChildren().stream().filter(n -> n.value == node.value).findAny().get();
-			}*/
 		} else {
 			//We are maximizing the black score since the PC is black
 			node.value = node.getBlackVal() - node.getWhiteVal();
@@ -156,6 +110,7 @@ public class ChessAiApplication {
 
 		for (BoardNode node : children) {
 			if (node.value > bestValue) {
+				bestValue = node.value;
 				bestChild = node;
 			}
 		}
