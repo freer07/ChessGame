@@ -3,6 +3,7 @@ import com.chessAI.Pieces.*;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     private Piece[][] board = new Piece[8][8];
@@ -17,6 +18,7 @@ public class Board {
     }
 
     private void startBoard() {
+
         //White Pieces Row 0
         board[0][0] = new Rook(false, 0, 0);
         board[0][1] = new Knight(false, 0, 1);
@@ -184,5 +186,46 @@ public class Board {
             }
         }
         return null;
+    }
+    public boolean containsKing(boolean b){
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                Piece p = board[i][j];
+                if (p != null && p.getClass().equals(King.class) && p.isBlack() == b) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isCheck(boolean blackMove){
+        List<Board> possibleBoards =getPossibleBoards(!blackMove);
+
+        List<Board> checks = possibleBoards.stream().filter(board -> !board.containsKing(blackMove)).collect(Collectors.toList());
+
+        return !checks.isEmpty();
+    }
+
+    public boolean checkMate(boolean blackMove){
+        if (isCheck(blackMove)) {
+            Pair<Integer, Integer> kingPos = getKing(blackMove);
+            King k = (King) board[kingPos.getKey()][kingPos.getValue()];
+            k.findAvailPos(getLayoutClone(),kingPos.getKey(), kingPos.getValue());
+            Vector<Vector<Integer>> availPos = k.availPos;
+            for (Vector<Integer> v : availPos) {
+                int x = v.get(0);
+                int y = v.get(1);
+                Board newBoard = new Board(getLayoutClone());
+                newBoard.move(kingPos.getKey(), kingPos.getValue(), x, y);
+                if(!newBoard.isCheck(blackMove)) {
+                    return false;
+                }
+            }
+        }
+        else {
+        return false;
+        }
+        return true;
     }
 }
