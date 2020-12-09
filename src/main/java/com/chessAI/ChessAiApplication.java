@@ -25,6 +25,13 @@ public class ChessAiApplication {
 			int xStart, yStart, xEnd, yEnd;
 			boolean validCastle = false;
 			board.show();
+			if(board.checkMate(false)) {
+				System.out.println("You're in Checkmate");
+				break;
+			}
+			else if (board.isCheck(false)) {
+				System.out.println("You're in check");
+			}
 			while (true) {
 				System.out.print("Select Piece: ");
 				xStart = scanner.nextInt() - 1;
@@ -64,6 +71,13 @@ public class ChessAiApplication {
 				board.move(xStart, yStart, xEnd, yEnd);
 			}
 			board.show();
+			if(board.checkMate(true)) {
+				System.out.println("Computer in Checkmate");
+				break;
+			}
+			else if (board.isCheck(true)){
+				System.out.println("Computer is in check");
+			}
 
 			System.out.println("Making Tree...");
 			BoardNode treeRoot = buildTree(new Board(board.getLayoutClone()), depthOfSearch);
