@@ -12,9 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication*/
 public class ChessAiApplication {
 	Board board;
-	private static final boolean printAllBoards = false;
+	private static final int depthOfSearch = 4;
 
-	public ChessAiApplication(int depthOfSearch) {
+	public ChessAiApplication() {
 		board = new Board();
 		Scanner scanner = new Scanner(System.in);//used for reading the user input
 
@@ -135,6 +135,6 @@ public class ChessAiApplication {
 		SpringApplication.run(ChessAiApplication.class, args);
 	}*/
 
-	public static void main(String[] args) {new ChessAiApplication(Integer.parseInt(args[0]));}
+	public static void main(String[] args) {new ChessAiApplication();}
 
 }

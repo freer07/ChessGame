@@ -19,12 +19,12 @@ public class Pawn extends Piece {
         if (!hasMoved) {//check En Passant
             if (this.black && X -2 >= 0) { //black on bottom so move up
                 Piece p = boardLayout[X -2][Y];
-                if (p==null || !p.isBlack()) { //valid position
+                if (p==null && boardLayout[X-1][Y] == null) { //valid position
                     addAvailPos(X -2, Y);
                 }
             } else if (X +2 < boardLayout.length) { //white on top so move down
                 Piece p = boardLayout[X +2][Y];
-                if (p==null || p.isBlack()) { //valid position
+                if (p==null && boardLayout[X+1][Y] == null) { //valid position
                     addAvailPos(X +2, Y);
                 }
             }
@@ -33,12 +33,12 @@ public class Pawn extends Piece {
         //check space in front
         if (this.black && X -1 >= 0) { //black on bottom so move up
             Piece p = boardLayout[X -1][Y];
-            if (p==null || !p.isBlack()) { //valid position
+            if (p==null) { //valid position
                 addAvailPos(X -1, Y);
             }
         } else if (!black && X +1 < boardLayout.length) { //white on top so move down
             Piece p = boardLayout[X +1][Y];
-            if (p==null || p.isBlack()) { //valid position
+            if (p==null) { //valid position
                 addAvailPos(X +1, Y);
             }
         }
