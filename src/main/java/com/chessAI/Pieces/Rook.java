@@ -5,7 +5,7 @@ public class Rook extends Piece {
     private static final int value = 50;
     public boolean isOriginal = true;
     //public boolean hasMoved = false;
-    public boolean canCastle = true;
+    public boolean canCastle = false;
 
     public Rook(boolean b, int x, int y) {
         super(b, abbrev, value);
@@ -33,6 +33,9 @@ public class Rook extends Piece {
 
         //if K is null then game should be over...
         boolean origPos = k!=null && !k.hasMoved && !k.inCheck && !hasMoved;
+        if (!origPos && canCastle) {
+            canCastle = false;
+        }
 
         //X+1 ... <boardLayout.length
         for (int i = X+1; i < boardLayout.length; i++) {
@@ -45,7 +48,7 @@ public class Rook extends Piece {
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
-                canCastle = false;
+                //canCastle = false;
                 break;
             }
         }
@@ -61,7 +64,7 @@ public class Rook extends Piece {
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
-                canCastle = false;
+                //canCastle = false;
                 break;
             }
         }
@@ -77,7 +80,7 @@ public class Rook extends Piece {
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
-                canCastle = false;
+                //canCastle = false;
                 break;
             }
         }
@@ -93,7 +96,7 @@ public class Rook extends Piece {
             } else if(origPos && pos.equals(k)) { //contains king then check castling
                 canCastle = true;
             } else { //contains own teammate then stop loop
-                canCastle = false;
+                //canCastle = false;
                 break;
             }
         }

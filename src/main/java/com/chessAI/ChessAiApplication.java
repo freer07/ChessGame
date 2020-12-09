@@ -2,6 +2,8 @@ package com.chessAI;
 
 import com.chessAI.BoardTree.BoardNode;
 import com.chessAI.Pieces.Piece;
+import com.chessAI.Pieces.Rook;
+import javafx.util.Pair;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,6 +23,7 @@ public class ChessAiApplication {
 		//User is White and Computer is black!!!
 		while (true) {
 			int xStart, yStart, xEnd, yEnd;
+			boolean validCastle = false;
 			board.show();
 			while (true) {
 				System.out.print("Select Piece: ");
@@ -32,8 +35,20 @@ public class ChessAiApplication {
 					xEnd = scanner.nextInt() - 1;
 					yEnd = scanner.next().charAt(0) - 65;
 					p.findAvailPos(board.getLayoutClone(), xStart, yStart);
+
 					//Check if the end position is valid
-					if (isValid(p.availPos, xEnd, yEnd)) {
+					if (p.getClass() == Rook.class && ((Rook) p).canCastle) {
+						Pair<Integer, Integer> pair = board.getKing(p.isBlack());
+						int kX, kY;
+						kX = pair.getKey();
+						kY = pair.getValue();
+
+						//valid castling
+						if (xEnd == kX && yEnd == kY) {
+							validCastle = true;
+							break;
+						}
+					} else if (isValid(p.availPos, xEnd, yEnd)) {
 						break;
 					} else {
 						System.out.println("Invalid Position\n");
@@ -43,7 +58,11 @@ public class ChessAiApplication {
 				}
 			}
 
-			board.move(xStart, yStart, xEnd, yEnd);
+			if (validCastle) {
+				board.castle(xStart, yStart, xEnd, yEnd);
+			} else {
+				board.move(xStart, yStart, xEnd, yEnd);
+			}
 			board.show();
 
 			System.out.println("Making Tree...");
