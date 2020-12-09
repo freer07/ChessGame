@@ -7,7 +7,11 @@ public class King extends Piece {
     public boolean inCheck = false;
 
     public King(boolean b, int x, int y) {
-        super(b, x, y, abbrev, value);
+        super(b, abbrev, value);
+    }
+
+    public King(boolean b, boolean hM) {
+        super(b, abbrev, value, hM);
     }
 
     @Override

@@ -6,7 +6,11 @@ public class Pawn extends Piece {
     //public boolean hasMoved = false;
 
     public Pawn(boolean b, int x, int y) {
-        super(b, x, y, abbrev, value);
+        super(b, abbrev, value);
+    }
+
+    public Pawn(boolean b, boolean hM) {
+        super(b, abbrev, value, hM);
     }
 
     @Override

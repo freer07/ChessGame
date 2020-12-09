@@ -10,11 +10,19 @@ public class Piece {
     int value;
     public Vector<Vector<Integer>> availPos = new Vector<>();
 
-    public Piece(boolean b, int x, int y, String a, int v) {
+    public Piece(boolean b, String a, int v) {
         black = b;
         isActive = true;
         abbrev = a;
         value = v;
+    }
+
+    public Piece(boolean b, String a, int v, boolean hM) {
+        black = b;
+        isActive = true;
+        abbrev = a;
+        value = v;
+        hasMoved = hM;
     }
 
     public void findAvailPos(Piece[][] boardLayout, int X, int Y) {

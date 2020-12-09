@@ -1,6 +1,7 @@
 package com.chessAI;
 
 import com.chessAI.BoardTree.BoardNode;
+import com.chessAI.Pieces.Piece;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,19 +20,34 @@ public class ChessAiApplication {
 
 		//User is White and Computer is black!!!
 		while (true) {
-			board.show();
-			System.out.print("Select Piece: ");
 			int xStart, yStart, xEnd, yEnd;
-			xStart = scanner.nextInt();
-			yStart = scanner.next().charAt(0) - 65;
-			System.out.print("Select Position: ");
-			xEnd = scanner.nextInt();
-			yEnd = scanner.next().charAt(0) - 65;
-			board.move(xStart - 1, yStart, xEnd - 1, yEnd);
+			board.show();
+			while (true) {
+				System.out.print("Select Piece: ");
+				xStart = scanner.nextInt() - 1;
+				yStart = scanner.next().charAt(0) - 65;
+				Piece p = board.getLayoutClone()[xStart][yStart];
+				if (p != null) {
+					System.out.print("Select Position: ");
+					xEnd = scanner.nextInt() - 1;
+					yEnd = scanner.next().charAt(0) - 65;
+					p.findAvailPos(board.getLayoutClone(), xStart, yStart);
+					//Check if the end position is valid
+					if (isValid(p.availPos, xEnd, yEnd)) {
+						break;
+					} else {
+						System.out.println("Invalid Position\n");
+					}
+				} else {
+					System.out.println("Invalid Selection\n");
+				}
+			}
+
+			board.move(xStart, yStart, xEnd, yEnd);
 			board.show();
 
 			System.out.println("Making Tree...");
-			BoardNode treeRoot = buildTree(board, depthOfSearch);
+			BoardNode treeRoot = buildTree(new Board(board.getLayoutClone()), depthOfSearch);
 
 			board = new Board(getBestChild(treeRoot).getBoard().getLayoutClone());
 			/*board = new Board(treeRoot.bestChild.getBoard().getLayoutClone());*/
@@ -144,6 +160,15 @@ public class ChessAiApplication {
 			}
 		}
 		return bestChild;
+	}
+
+	private boolean isValid(Vector<Vector<Integer>> positions, int x, int y) {
+		for (Vector<Integer> v : positions) {
+			if (v.get(0) == x && v.get(1) == y) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/*public static void main(String[] args) {

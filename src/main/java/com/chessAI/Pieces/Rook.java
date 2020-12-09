@@ -8,13 +8,21 @@ public class Rook extends Piece {
     public boolean canCastle = true;
 
     public Rook(boolean b, int x, int y) {
-        super(b, x, y, abbrev, value);
+        super(b, abbrev, value);
     }
 
     //This constructor is used when the Rook is not an original piece (castling not valid)
     public Rook(boolean b, int x, int y, boolean o) {
-        super(b, x, y, abbrev, value);
+        super(b, abbrev, value);
         isOriginal = o;
+    }
+
+    public Rook(Pawn r) {
+        super(r.black, abbrev, value, r.hasMoved);
+    }
+
+    public Rook(boolean black, boolean hasMoved) {
+        super(black, abbrev, value, hasMoved);
     }
 
     @Override
@@ -27,7 +35,7 @@ public class Rook extends Piece {
         boolean origPos = k!=null && !k.hasMoved && !k.inCheck && !hasMoved;
 
         //X+1 ... <boardLayout.length
-        for (int i = X; i < boardLayout.length; i++) {
+        for (int i = X+1; i < boardLayout.length; i++) {
             Piece pos = boardLayout[i][Y];
             if (pos == null) { //if empty then valid
                 addAvailPos(i, Y);
@@ -43,7 +51,7 @@ public class Rook extends Piece {
         }
 
         //Y+1 ... <boardLayout.length
-        for (int i = Y; i < boardLayout.length; i++) {
+        for (int i = Y+1; i < boardLayout.length; i++) {
             Piece pos = boardLayout[X][i];
             if (pos == null) { //if empty then valid
                 addAvailPos(X, i);
@@ -59,7 +67,7 @@ public class Rook extends Piece {
         }
 
         //X-1 ... <boardLayout.length
-        for (int i = X; i >= 0; i--) {
+        for (int i = X-1; i >= 0; i--) {
             Piece pos = boardLayout[i][Y];
             if (pos == null) { //if empty then valid
                 addAvailPos(i, Y);
@@ -75,7 +83,7 @@ public class Rook extends Piece {
         }
 
         //Y-1 ... <boardLayout.length
-        for (int i = Y; i >= 0; i--) {
+        for (int i = Y-1; i >= 0; i--) {
             Piece pos = boardLayout[X][i];
             if (pos == null) { //if empty then valid
                 addAvailPos(X, i);

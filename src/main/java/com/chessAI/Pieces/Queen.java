@@ -5,7 +5,11 @@ public class Queen extends Piece {
     private static final int value = 90;
 
     public Queen(boolean b, int x, int y) {
-        super(b, x, y, abbrev, value);
+        super(b, abbrev, value);
+    }
+
+    public Queen(boolean black, boolean hasMoved) {
+        super(black, abbrev, value, hasMoved);
     }
 
     @Override
@@ -84,7 +88,7 @@ public class Queen extends Piece {
 
         //Check straight moves
         //X+1 ... <boardLayout.length
-        for (int i = X; i < boardLayout.length; i++) {
+        for (int i = X+1; i < boardLayout.length; i++) {
             Piece pos = boardLayout[i][Y];
             if (pos == null) { //if empty then valid
                 addAvailPos(i, Y);
@@ -97,7 +101,7 @@ public class Queen extends Piece {
         }
 
         //Y+1 ... <boardLayout.length
-        for (int i = Y; i < boardLayout.length; i++) {
+        for (int i = Y+1; i < boardLayout.length; i++) {
             Piece pos = boardLayout[X][i];
             if (pos == null) { //if empty then valid
                 addAvailPos(X, i);
@@ -110,7 +114,7 @@ public class Queen extends Piece {
         }
 
         //X-1 ... <boardLayout.length
-        for (int i = X; i >= 0; i--) {
+        for (int i = X-1; i >= 0; i--) {
             Piece pos = boardLayout[i][Y];
             if (pos == null) { //if empty then valid
                 addAvailPos(i, Y);
@@ -123,7 +127,7 @@ public class Queen extends Piece {
         }
 
         //Y-1 ... <boardLayout.length
-        for (int i = Y; i >= 0; i--) {
+        for (int i = Y-1; i >= 0; i--) {
             Piece pos = boardLayout[X][i];
             if (pos == null) { //if empty then valid
                 addAvailPos(X, i);
