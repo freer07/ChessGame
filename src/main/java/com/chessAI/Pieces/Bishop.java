@@ -5,7 +5,11 @@ public class Bishop extends Piece {
     private static final int value = 30;
 
     public Bishop(boolean b, int x, int y) {
-        super(b, x, y, abbrev, value);
+        super(b, abbrev, value);
+    }
+
+    public Bishop(boolean black, boolean hasMoved) {
+        super(black, abbrev, value, hasMoved);
     }
 
     @Override

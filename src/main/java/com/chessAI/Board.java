@@ -135,7 +135,31 @@ public class Board {
     }
 
     public Piece[][] getLayoutClone() {
-        Piece[][] copy = Arrays.stream(board).map(Piece[]::clone).toArray(Piece[][]::new);
+        /*Piece[][] copy = Arrays.stream(board).map(Piece[]::clone).toArray(Piece[][]::new);*/
+
+        Piece[][] copy = new Piece[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                Piece p = board[i][j];
+                if (p != null) {
+                    Piece newP;
+                    if (p.getClass() == Pawn.class) {
+                        newP = new Pawn(p.isBlack(), p.hasMoved);
+                    } else if (p.getClass() == King.class) {
+                        newP = new King(p.isBlack(), p.hasMoved);
+                    } else if (p.getClass() == Knight.class) {
+                        newP = new Knight(p.isBlack(),p.hasMoved);
+                    } else if (p.getClass() == Bishop.class) {
+                        newP = new Bishop(p.isBlack(),p.hasMoved);
+                    } else if (p.getClass() == Queen.class) {
+                        newP = new Queen(p.isBlack(),p.hasMoved);
+                    } else {
+                        newP = new Rook(p.isBlack(),p.hasMoved);
+                    }
+                    copy[i][j] = newP;
+                }
+            }
+        }
         return copy;
     }
 
