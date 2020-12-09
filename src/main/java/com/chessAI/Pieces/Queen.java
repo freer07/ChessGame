@@ -139,4 +139,12 @@ public class Queen extends Piece {
             }
         }
     }
+    @Override
+    public Piece clonePiece(){
+        Piece newPiece;
+
+        newPiece = new Queen(this.black, this.hasMoved);
+
+        return newPiece;
+    }
 }

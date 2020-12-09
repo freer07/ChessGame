@@ -48,4 +48,7 @@ public class Piece {
     public void setCorr(int x, int y) {
     }
 
+    public Piece clonePiece(){
+        return this;
+    }
 }

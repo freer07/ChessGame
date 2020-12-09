@@ -99,6 +99,15 @@ public class Rook extends Piece {
         }
     }
 
+    @Override
+    public Piece clonePiece(){
+        Piece newPiece;
+
+        newPiece = new Rook(this.black, this.hasMoved);
+
+        return newPiece;
+    }
+
     private King getKing(Piece[][] boardLayout) {
         for (Piece[] pieces : boardLayout) {
             for (int j = 0; j < boardLayout[0].length; j++) {

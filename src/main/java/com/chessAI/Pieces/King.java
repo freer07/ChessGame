@@ -82,4 +82,13 @@ public class King extends Piece {
             }
         }
     }
+
+    @Override
+    public Piece clonePiece(){
+        Piece newPiece;
+
+        newPiece = new King(this.black, this.hasMoved);
+
+        return newPiece;
+    }
 }
