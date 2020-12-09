@@ -28,8 +28,10 @@ public class ChessAiApplication {
 			if(board.checkMate(false)) {
 				System.out.println("You're in Checkmate");
 				break;
-			}
-			else if (board.isCheck(false)) {
+			} if (board.staleMate(false)) {
+				System.out.println("Stalemate!");
+				break;
+			} else if (board.isCheck(false)) {
 				System.out.println("You're in check");
 			}
 			while (true) {
@@ -37,7 +39,7 @@ public class ChessAiApplication {
 				xStart = scanner.nextInt() - 1;
 				yStart = scanner.next().charAt(0) - 65;
 				Piece p = board.getLayoutClone()[xStart][yStart];
-				if (p != null) {
+				if (p != null && !p.isBlack()) {
 					System.out.print("Select Position: ");
 					xEnd = scanner.nextInt() - 1;
 					yEnd = scanner.next().charAt(0) - 65;
@@ -74,8 +76,10 @@ public class ChessAiApplication {
 			if(board.checkMate(true)) {
 				System.out.println("Computer in Checkmate");
 				break;
-			}
-			else if (board.isCheck(true)){
+			} else if (board.staleMate(true)) {
+				System.out.println("Stalemate!");
+				break;
+			} else if (board.isCheck(true)){
 				System.out.println("Computer is in check");
 			}
 
