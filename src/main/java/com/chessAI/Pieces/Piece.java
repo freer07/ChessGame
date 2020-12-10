@@ -45,9 +45,6 @@ public class Piece {
         return value;
     }
 
-    public void setCorr(int x, int y) {
-    }
-
     public Piece clonePiece(){
         return this;
     }

@@ -63,6 +63,13 @@ public class Board {
 
         board[2][7] = new Knight(true, 7, 1);
         board[0][7] = new King(true, 7, 4);*/
+
+        //Pawn promotion test
+        /*board[6][0] = new Pawn(false, 0, 0);
+        board[0][5] = new King(false, 0, 4);
+
+        board[0][7] = new King(true, 7, 4);
+        board[1][2] = new Pawn(true, 0, 0);*/
     }
 
     public void show() {
@@ -91,8 +98,6 @@ public class Board {
         if (!board[x2][y2].hasMoved) {
             board[x2][y2].hasMoved = true;
         }
-
-        board[x2][y2].setCorr(x2, y2);
     }
 
     public void castle(int rX, int rY, int kX, int kY) {
@@ -134,7 +139,6 @@ public class Board {
                     if (p.getClass().equals(Rook.class)) {
                         Rook rook = (Rook)p;
                         if (rook.canCastle) {
-                            //TODO: add logic for castling
                             Pair<Integer, Integer> pair = getKing(rook.isBlack());
                             Board newBoard = new Board(getLayoutClone());
                             assert pair != null;
@@ -147,8 +151,13 @@ public class Board {
                     for (Vector<Integer> v : availPos) {
                         int x = v.get(0);
                         int y = v.get(1);
+
                         Board newBoard = new Board(getLayoutClone());
-                        newBoard.move(i, j, x, y);
+                        if (p.getClass().equals(Pawn.class) && (x==0 || x == board.length-1)) {
+                            newBoard.promotePawn(i, j, x, y, 'Q');
+                        } else {
+                            newBoard.move(i, j, x, y);
+                        }
                         boards.add(newBoard);
                     }
                 }
@@ -266,5 +275,31 @@ public class Board {
             }
         }
         return true;
+    }
+
+    /**
+     * Selection is the version to promote the pawn to
+     */
+    public void promotePawn(int x1, int y1, int x2, int y2, char selection) {
+        Piece p = board[x1][y1];
+        switch (selection) {
+            case 'R'://rook
+                p = new Rook(p.isBlack(), true);
+                break;
+            case 'B'://bishop
+                p = new Bishop(p.isBlack(), true);
+                break;
+            case 'N'://knight
+                p = new Knight(p.isBlack(), true);
+                break;
+            default://queen
+                p = new Queen(p.isBlack(), true);
+                break;
+        }
+        board[x2][y2] = p;
+        board[x1][y1] = null;
+        if (!board[x2][y2].hasMoved) {
+            board[x2][y2].hasMoved = true;
+        }
     }
 }
