@@ -19,7 +19,7 @@ public class Board {
 
     private void startBoard() {
 
-        /*//White Pieces Row 0
+        //White Pieces Row 0
         board[0][0] = new Rook(false, 0, 0);
         board[0][1] = new Knight(false, 0, 1);
         board[0][2] = new Bishop(false, 0, 2);
@@ -53,20 +53,20 @@ public class Board {
                     pieces.add(board[i][j]);
                 }
             }
-        }*/
+        }
 
         //not stalemate
-        board[7][6] = new Rook(false, 0, 0);
+        /*board[7][6] = new Rook(false, 0, 0);
         board[1][0] = new Queen(false, 0, 3);
         board[0][5] = new King(false, 0, 4);
         board[6][7] = new Rook(false, 0, 7);
 
         board[2][7] = new Knight(true, 7, 1);
         board[0][7] = new King(true, 7, 4);
-        board[2][6] = new Bishop(true, 7, 2);
+        board[2][6] = new Bishop(true, 7, 2);*/
 
-        /*//stalemate
-        board[2][6] = new Rook(false, 0, 0);
+        //stalemate
+        /*board[2][6] = new Rook(false, 0, 0);
         board[1][0] = new Queen(false, 0, 3);
         board[0][5] = new King(false, 0, 4);
         board[6][7] = new Rook(false, 0, 7);
@@ -109,7 +109,9 @@ public class Board {
         assert rX == kX;
         Rook rook = (Rook)board[rX][rY].clonePiece();
         rook.canCastle = false;
+        rook.hasMoved = true;
         King king = (King) board[kX][kY].clonePiece();
+        king.hasMoved = true;
 
         board[rX][rY] = null;
         board[kX][kY] = null;
@@ -227,7 +229,7 @@ public class Board {
     }
 
     public boolean checkMate(boolean blackMove){
-        if (isCheck(blackMove)) {
+        if (containsKing(blackMove) && isCheck(blackMove)) {
             Pair<Integer, Integer> kingPos = getKing(blackMove);
             King k = (King) board[kingPos.getKey()][kingPos.getValue()];
             k.findAvailPos(getLayoutClone(),kingPos.getKey(), kingPos.getValue());
@@ -241,9 +243,8 @@ public class Board {
                     return false;
                 }
             }
-        }
-        else {
-        return false;
+        } else {
+            return false;
         }
         return true;
     }
@@ -255,22 +256,20 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
-                if (p != null) {
+                if (p != null && p.isBlack() == blackMove) {
                     p.findAvailPos(getLayoutClone(), i, j);
-                    if (p.isBlack() == blackMove) {
-                        Vector<Vector<Integer>> availPos = p.availPos;
-                        List<Board> boards = new LinkedList<>();
-                        for (Vector<Integer> v : availPos) {
-                            int x = v.get(0);
-                            int y = v.get(1);
-                            Board newBoard = new Board(getLayoutClone());
-                            newBoard.move(i, j, x, y);
-                            boards.add(newBoard);
-                        }
-                        for (Board b : boards) {
-                            if (!b.isCheck(blackMove)) {
-                                return false;
-                            }
+                    Vector<Vector<Integer>> availPos = p.availPos;
+                    List<Board> boards = new LinkedList<>();
+                    for (Vector<Integer> v : availPos) {
+                        int x = v.get(0);
+                        int y = v.get(1);
+                        Board newBoard = new Board(getLayoutClone());
+                        newBoard.move(i, j, x, y);
+                        boards.add(newBoard);
+                    }
+                    for (Board b : boards) {
+                        if (!b.isCheck(blackMove)) {
+                            return false;
                         }
                     }
                 }

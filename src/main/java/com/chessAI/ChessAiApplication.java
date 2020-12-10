@@ -25,15 +25,20 @@ public class ChessAiApplication {
 			int xStart, yStart, xEnd, yEnd;
 			boolean validCastle = false;
 			board.show();
-			if(board.checkMate(false)) {
+
+			if (!board.containsKing(false)) {
+				System.out.println("You Lose");
+				break;
+			} else if (board.checkMate(false)) {
 				System.out.println("You're in Checkmate");
 				break;
-			} if (board.staleMate(false)) {
+			} if (board.staleMate(false) || board.staleMate(true)) {
 				System.out.println("Stalemate!");
 				break;
 			} else if (board.isCheck(false)) {
 				System.out.println("You're in check");
 			}
+
 			while (true) {
 				System.out.print("Select Piece: ");
 				xStart = scanner.nextInt() - 1;
@@ -73,10 +78,15 @@ public class ChessAiApplication {
 				board.move(xStart, yStart, xEnd, yEnd);
 			}
 			board.show();
-			if(board.checkMate(true)) {
+
+
+			if (!board.containsKing(true)) {
+				System.out.println("You Win!");
+				break;
+			} else if(board.checkMate(true)) {
 				System.out.println("Computer in Checkmate");
 				break;
-			} else if (board.staleMate(true)) {
+			} else if (board.staleMate(true) || board.staleMate(false)) {
 				System.out.println("Stalemate!");
 				break;
 			} else if (board.isCheck(true)){
@@ -88,6 +98,7 @@ public class ChessAiApplication {
 
 			board = new Board(getBestChild(treeRoot).getBoard().getLayoutClone());
 		}
+		scanner.close();
 	}
 
 	/**
