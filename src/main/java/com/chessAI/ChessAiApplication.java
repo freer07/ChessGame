@@ -1,6 +1,7 @@
 package com.chessAI;
 
 import com.chessAI.BoardTree.BoardNode;
+import com.chessAI.Pieces.Pawn;
 import com.chessAI.Pieces.Piece;
 import com.chessAI.Pieces.Rook;
 import javafx.util.Pair;
@@ -24,6 +25,7 @@ public class ChessAiApplication {
 		while (true) {
 			int xStart, yStart, xEnd, yEnd;
 			boolean validCastle = false;
+			boolean pawnPromoted = false;
 			board.show();
 
 			if (!board.containsKing(false)) {
@@ -43,12 +45,13 @@ public class ChessAiApplication {
 				System.out.print("Select Piece: ");
 				xStart = scanner.nextInt() - 1;
 				yStart = scanner.next().charAt(0) - 65;
-				Piece p = board.getLayoutClone()[xStart][yStart];
+				Piece[][] layoutClone = board.getLayoutClone();
+				Piece p = layoutClone[xStart][yStart];
 				if (p != null && !p.isBlack()) {
 					System.out.print("Select Position: ");
 					xEnd = scanner.nextInt() - 1;
 					yEnd = scanner.next().charAt(0) - 65;
-					p.findAvailPos(board.getLayoutClone(), xStart, yStart);
+					p.findAvailPos(layoutClone, xStart, yStart);
 
 					//Check if the end position is valid
 					if (p.getClass() == Rook.class && ((Rook) p).canCastle) {
@@ -63,6 +66,15 @@ public class ChessAiApplication {
 							break;
 						}
 					} else if (isValid(p.availPos, xEnd, yEnd)) {
+						if (p.getClass() == Pawn.class && xEnd == layoutClone.length-1) {
+							char c;
+							System.out.print("Promote Pawn (enter letter ex. Q): ");
+							c = scanner.next().charAt(0);
+
+							//do Pawn promotion
+							board.promotePawn(xStart, yStart, xEnd, yEnd, c);
+							pawnPromoted = true;
+						}
 						break;
 					} else {
 						System.out.println("Invalid Position\n");
@@ -74,7 +86,7 @@ public class ChessAiApplication {
 
 			if (validCastle) {
 				board.castle(xStart, yStart, xEnd, yEnd);
-			} else {
+			} else if(!pawnPromoted) {
 				board.move(xStart, yStart, xEnd, yEnd);
 			}
 			board.show();
