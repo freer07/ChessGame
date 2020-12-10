@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class Board {
     private Piece[][] board = new Piece[8][8];
-    private final ArrayList<Piece> pieces = new ArrayList<>();
 
     public Board(){
         startBoard();
@@ -44,15 +43,6 @@ public class Board {
         //Black Pieces Row 1
         for(int i = 0; i<8; i++) {
             board[6][i] = new Pawn(true, 6, i);
-        }
-
-        //Add all pieces to list
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] != null) {
-                    pieces.add(board[i][j]);
-                }
-            }
         }
 
         //not stalemate
