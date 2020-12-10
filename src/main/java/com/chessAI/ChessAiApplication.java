@@ -70,6 +70,7 @@ public class ChessAiApplication {
 							char c;
 							System.out.print("Promote Pawn (enter letter ex. Q): ");
 							c = scanner.next().charAt(0);
+							System.out.println();
 
 							//do Pawn promotion
 							board.promotePawn(xStart, yStart, xEnd, yEnd, c);
