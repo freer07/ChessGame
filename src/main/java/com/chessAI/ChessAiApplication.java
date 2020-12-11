@@ -7,12 +7,7 @@ import com.chessAI.Pieces.Rook;
 import javafx.util.Pair;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
-/*import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication*/
 public class ChessAiApplication {
 	Board board;
 	private static final int depthOfSearch = 4;
@@ -20,6 +15,7 @@ public class ChessAiApplication {
 	public ChessAiApplication() {
 		board = new Board();
 		Scanner scanner = new Scanner(System.in);//used for reading the user input
+		BoardNode treeRoot;
 
 		//User is White and Computer is black!!!
 		while (true) {
@@ -44,7 +40,7 @@ public class ChessAiApplication {
 			while (true) {
 				System.out.print("Select Piece: ");
 				xStart = scanner.nextInt() - 1;
-				yStart = scanner.next().charAt(0) - 65;
+				yStart = scanner.next().toUpperCase().charAt(0) - 65;
 				Piece[][] layoutClone = board.getLayoutClone();
 				Piece p = layoutClone[xStart][yStart];
 				if (p != null && !p.isBlack()) {
@@ -106,7 +102,7 @@ public class ChessAiApplication {
 			}
 
 			System.out.println("Making Tree...");
-			BoardNode treeRoot = buildTree(new Board(board.getLayoutClone()), depthOfSearch);
+			treeRoot = buildTree(new Board(board.getLayoutClone()));
 
 			board = new Board(getBestChild(treeRoot).getBoard().getLayoutClone());
 		}
@@ -118,11 +114,11 @@ public class ChessAiApplication {
 	 * @param board the current game layout
 	 * @return root of the tree
 	 */
-	private BoardNode buildTree(Board board, int maxDepth) {
+	private BoardNode buildTree(Board board) {
 		BoardNode root = new BoardNode(board);
 
 		//Set True because black will move first
-		makeChildren(root, 0, maxDepth, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		makeChildren(root, 0, ChessAiApplication.depthOfSearch, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		return root;
 	}
 
@@ -174,7 +170,7 @@ public class ChessAiApplication {
 		int bestValue = Integer.MIN_VALUE;
 
 		for (BoardNode node : children) {
-			if (node.value > bestValue) {
+			if (!node.getBoard().isCheck(true) && node.value > bestValue) {
 				bestValue = node.value;
 				bestChild = node;
 			}
@@ -190,10 +186,6 @@ public class ChessAiApplication {
 		}
 		return false;
 	}
-
-	/*public static void main(String[] args) {
-		SpringApplication.run(ChessAiApplication.class, args);
-	}*/
 
 	public static void main(String[] args) {new ChessAiApplication();}
 
