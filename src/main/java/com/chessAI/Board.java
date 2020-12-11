@@ -131,11 +131,12 @@ public class Board {
 
     public List<Board> getPossibleBoards(boolean blackMove) {
         List<Board> boards = new LinkedList<>();
-        findAllMoves();
+        Piece[][] clonedLayout = getLayoutClone();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 Piece p = board[i][j];
                 if (p != null && p.isBlack() == blackMove) {
+                    p.findAvailPos(clonedLayout, i, j);
                     if (p.getClass().equals(Rook.class)) {
                         Rook rook = (Rook)p;
                         if (rook.canCastle) {
@@ -180,8 +181,6 @@ public class Board {
     }
 
     public Piece[][] getLayoutClone() {
-        /*Piece[][] copy = Arrays.stream(board).map(Piece[]::clone).toArray(Piece[][]::new);*/
-
         Piece[][] copy = new Piece[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
