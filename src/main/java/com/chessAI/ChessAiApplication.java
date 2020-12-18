@@ -122,9 +122,19 @@ public class ChessAiApplication {
 		return root;
 	}
 
+	/**
+	 * This method is used for the mini-max algorithm and tree pruning for finding the best possible move for the
+	 * computer (black)
+	 * @param node is the current node
+	 * @param depth is the current depth
+	 * @param maxDepth is the max search depth
+	 * @param blackMove is the team to move at this depth
+	 * @param alpha is the best
+	 * @param beta is the worst
+	 * @return the best position
+	 */
 	private int makeChildren(BoardNode node, int depth, int maxDepth, boolean blackMove, int alpha, int beta) {
 		if (depth < maxDepth) {
-			// WE KNOW THIS WORKS
 			node.addChildren(blackMove);
 			List<BoardNode> children = node.getChildren();
 			List<BoardNode> iterated = new LinkedList<>();
@@ -164,6 +174,11 @@ public class ChessAiApplication {
 		return node.value;
 	}
 
+	/**
+	 * This is used to determine the best board for the possible moves out of the direct list of children
+	 * @param root is the tree root
+	 * @return the best BoardNode
+	 */
 	private BoardNode getBestChild(BoardNode root) {
 		List<BoardNode> children = root.getChildren();
 		BoardNode bestChild = null;

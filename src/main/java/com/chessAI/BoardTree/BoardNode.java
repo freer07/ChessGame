@@ -27,9 +27,9 @@ public class BoardNode {
 
     private void findValues() {
         Piece[][] layout = board.getLayoutClone();
-        for (int i = 0; i < layout.length; i++) {
+        for (Piece[] pieces : layout) {
             for (int j = 0; j < layout[0].length; j++) {
-                Piece p = layout[i][j];
+                Piece p = pieces[j];
                 if (p != null) {
                     if (p.isBlack()) {
                         blackVal = blackVal + p.getValue();
